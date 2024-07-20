@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# pos-os-postinstall.sh - Instalar e configura programas no Pop!_OS (20.04 LTS ou superior)
+# pos-os-postinstall.sh - Instalar e configura programas no Pop!_OS (22.04 LTS ou superior)
 #
 # ------------------------------------------------------------------------ #
 #
