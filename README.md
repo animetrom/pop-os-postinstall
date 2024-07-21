@@ -6,5 +6,5 @@ Script de post install do Pop!_OS
 
 Apenas execute o comando abaixo no terminal
 ```shell
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/animetrom/pop-os-postinstall/main/pop-os-postinstall.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/animetrom/pop-os-postinstall/main/pop-os-postinstall.sh)"
 ```
