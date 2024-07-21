@@ -10,20 +10,14 @@
 # ----------------------------- VARIÁVEIS ----------------------------- #
 set -e
 
-## Função para obter a última versão de um .deb do GitHub ##
-latest_github_release(){
-  repo=$1
-  curl -s "https://api.github.com/repos/$repo/releases/latest" | grep "browser_download_url.*amd64.deb" | cut -d '"' -f 4
-}
-
 ## URLS
 
-URL_FIREFOXPWA=$(latest_github_release "filips123/PWAsForFirefox")
-URL_XDMAN=$(latest_github_release "subhra74/xdm")
-URL_WHATSAPP=$(latest_github_release "eneshecan/whatsapp-for-linux")
+URL_FIREFOXPWA="https://github.com/filips123/PWAsForFirefox/releases/download/v2.12.1/firefoxpwa_2.12.1_amd64.deb"
+URL_XDMAN="https://github.com/subhra74/xdm/releases/download/8.0.29/xdman_gtk_8.0.29_amd64.deb"
+URL_WHATSAPP="https://github.com/eneshecan/whatsapp-for-linux/releases/download/v1.6.5/whatsapp-for-linux_1.6.5_amd64.deb"
 URL_DISCORD="https://discord.com/api/download?platform=linux&format=deb"
-URL_APP_OUTLET=$(latest_github_release "AppOutlet/AppOutlet")
-URL_FREETUBE=$(latest_github_release "FreeTubeApp/FreeTube")
+URL_APP_OUTLET="https://github.com/AppOutlet/AppOutlet/releases/download/v2.1.0/app-outlet_2.1.0_amd64.deb"
+URL_FREETUBE="https://github.com/FreeTubeApp/FreeTube/releases/download/v0.21.1-beta/freetube_0.21.1_amd64.deb"
 
 ## DIRETÓRIOS E ARQUIVOS
 
@@ -44,6 +38,9 @@ apt_update(){
   sudo apt update && sudo apt dist-upgrade -y
 }
 
+# -------------------------------------------------------------------------------- #
+# -------------------------------TESTES E REQUISITOS----------------------------- #
+
 # Internet conectando?
 testes_internet(){
 if ! ping -c 1 8.8.8.8 -q &> /dev/null; then
@@ -54,10 +51,13 @@ else
 fi
 }
 
+# ------------------------------------------------------------------------------ #
+
+
 ## Removendo travas eventuais do apt ##
 travas_apt(){
-  sudo rm /var/lib/dpkg/lock-frontend
-  sudo rm /var/cache/apt/archives/lock
+  sudo rm -f /var/lib/dpkg/lock-frontend
+  sudo rm -f /var/cache/apt/archives/lock
 }
 
 ## Adicionando/Confirmando arquitetura de 32 bits ##
@@ -118,15 +118,20 @@ install_debs(){
   wget -c "$URL_FIREFOXPWA" -O "$DIRETORIO_DOWNLOADS/firefoxpwa.deb"
   install_deb_with_deps "$DIRETORIO_DOWNLOADS/firefoxpwa.deb"
 
-  wget -c "$URL_XDMAN" -P "$DIRETORIO_DOWNLOADS"
+  wget -c "$URL_XDMAN" -O "$DIRETORIO_DOWNLOADS/xdman.deb"
+  install_deb_with_deps "$DIRETORIO_DOWNLOADS/xdman.deb"
 
-  wget -c "$URL_WHATSAPP" -P "$DIRETORIO_DOWNLOADS"
+  wget -c "$URL_WHATSAPP" -O "$DIRETORIO_DOWNLOADS/whatsapp.deb"
+  install_deb_with_deps "$DIRETORIO_DOWNLOADS/whatsapp.deb"
 
-  wget -c "$URL_DISCORD" -P "$DIRETORIO_DOWNLOADS"
+  wget -c "$URL_DISCORD" -O "$DIRETORIO_DOWNLOADS/discord.deb"
+  install_deb_with_deps "$DIRETORIO_DOWNLOADS/discord.deb"
 
-  wget -c "$URL_APP_OUTLET" -P "$DIRETORIO_DOWNLOADS"
+  wget -c "$URL_APP_OUTLET" -O "$DIRETORIO_DOWNLOADS/appoutlet.deb"
+  install_deb_with_deps "$DIRETORIO_DOWNLOADS/appoutlet.deb"
 
-  wget -c "$URL_FREETUBE" -P "$DIRETORIO_DOWNLOADS"
+  wget -c "$URL_FREETUBE" -O "$DIRETORIO_DOWNLOADS/freetube.deb"
+  install_deb_with_deps "$DIRETORIO_DOWNLOADS/freetube.deb"
 
   ## Instalando pacotes .deb baixados na sessão anterior ##
   echo -e "${VERDE}[INFO] - Instalando pacotes .deb baixados${SEM_COR}"
