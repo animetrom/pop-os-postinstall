@@ -44,9 +44,6 @@ apt_update(){
   sudo apt update && sudo apt dist-upgrade -y
 }
 
-# -------------------------------------------------------------------------------- #
-# -------------------------------TESTES E REQUISITOS----------------------------- #
-
 # Internet conectando?
 testes_internet(){
 if ! ping -c 1 8.8.8.8 -q &> /dev/null; then
@@ -56,9 +53,6 @@ else
   echo -e "${VERDE}[INFO] - Conexão com a Internet funcionando normalmente.${SEM_COR}"
 fi
 }
-
-# ------------------------------------------------------------------------------ #
-
 
 ## Removendo travas eventuais do apt ##
 travas_apt(){
