@@ -10,6 +10,12 @@
 # ----------------------------- VARIÁVEIS ----------------------------- #
 set -e
 
+## Função para obter a última versão de um .deb do GitHub ##
+latest_github_release(){
+  repo=$1
+  curl -s "https://api.github.com/repos/$repo/releases/latest" | grep "browser_download_url.*amd64.deb" | cut -d '"' -f 4
+}
+
 ## URLS
 
 URL_FIREFOXPWA=$(latest_github_release "filips123/PWAsForFirefox")
@@ -100,14 +106,6 @@ PROGRAMAS_PARA_INSTALAR_FLATPAK=(
   io.github.tdesktop_x64.TDesktop
 )
 
-# ---------------------------------------------------------------------- #
-
-## Função para obter a última versão de um .deb do GitHub ##
-latest_github_release(){
-  repo=$1
-  curl -s "https://api.github.com/repos/$repo/releases/latest" | grep "browser_download_url.*amd64.deb" | cut -d '"' -f 4
-}
-
 ## Função para instalar pacotes .deb e corrigir dependências ##
 install_deb_with_deps(){
   deb_file=$1
@@ -135,8 +133,6 @@ install_debs(){
   wget -c "$URL_APP_OUTLET" -P "$DIRETORIO_DOWNLOADS"
 
   wget -c "$URL_FREETUBE" -P "$DIRETORIO_DOWNLOADS"
-
-  wget -c "$URL_ATLAUNCHER" -P "$DIRETORIO_DOWNLOADS"
 
   ## Instalando pacotes .deb baixados na sessão anterior ##
   echo -e "${VERDE}[INFO] - Instalando pacotes .deb baixados${SEM_COR}"
